@@ -18,7 +18,7 @@ from time import time
 from time import sleep
 
 # A[N][N], B[N][N], C[N][N]
-N = 512
+N = 8192
 
 # Number of elements in the matrix
 size = N * N
