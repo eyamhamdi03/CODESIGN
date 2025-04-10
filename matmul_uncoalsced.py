@@ -19,7 +19,7 @@ from time import time
 from time import sleep
 
 # A[N][N], B[N][N], C[N][N]
-N =8192
+N =1024
 
 # Number of elements in the matrix
 size = N * N
@@ -74,17 +74,12 @@ d_a = cl.Buffer(context, cl.mem_flags.READ_ONLY | cl.mem_flags.COPY_HOST_PTR, ho
 d_b = cl.Buffer(context, cl.mem_flags.READ_ONLY | cl.mem_flags.COPY_HOST_PTR, hostbuf=h_B)
 d_c = cl.Buffer(context, cl.mem_flags.WRITE_ONLY, size=h_C.nbytes)
 
-#--------------------------------------------------------------------------------
-# OpenCL matrix multiplication ... Naive: Each WI computes one element
-# C_elemnt.cl : i= get_global_id(0) - j=get_global_id(1)
-#--------------------------------------------------------------------------------
 kernelsource = open(kernel_name).read()
 program = cl.Program(context, kernelsource).build()
 mmul = program.mmul
 mmul.set_scalar_arg_dtypes([numpy.int32, None, None, None])
 
-# Do the multiplication COUNT times
-
+COUNT = 1 
 print ("\n Starting ", COUNT, " OpenCL Matrix Multiplications")
 start_time = time()
 
